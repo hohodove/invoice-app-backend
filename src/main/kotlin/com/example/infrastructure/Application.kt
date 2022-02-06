@@ -1,13 +1,16 @@
 package com.example.infrastructure
 
-import com.example.controller.configureRouting
+import com.example.controller.Routing
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.request.*
-import io.ktor.response.*
 import org.slf4j.event.*
 
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+
+@Suppress("unused")
 fun Application.module() {
+
     install(CallLogging) {
         level = Level.INFO
         format { call ->
@@ -20,5 +23,6 @@ fun Application.module() {
                     "QueryString: $queryString, Cookies: $cookies"
         }
     }
-    configureRouting()
+
+    Routing()
 }
