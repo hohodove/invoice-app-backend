@@ -9,7 +9,7 @@ import java.time.LocalDate
 fun Route.greetController() {
 
     route("/greet") {
-        get ("/hello") {
+        get("/hello") {
             val invoice = Invoice.create(1, 1000, LocalDate.parse("2022-01-10"))
             call.respond(invoice)
         }
