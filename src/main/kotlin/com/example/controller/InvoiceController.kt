@@ -10,6 +10,7 @@ fun Route.invoiceController() {
         get("/all") {
             val getAllInvoices = GetAllInvoices()
             val invoices = getAllInvoices.getAllInvoice()
+//            val invoice = getAllInvoices.getInvoice(InvoiceId.reconstruct("ad4a1759-5438-4c9f-8926-068bcd5add96"))
             call.respond(invoices)
         }
     }
