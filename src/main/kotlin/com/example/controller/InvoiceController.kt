@@ -6,12 +6,25 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Route.invoiceController() {
-    route("/invoice") {
-        get("/all") {
-            val getAllInvoices = GetAllInvoices()
-            val invoices = getAllInvoices.getAllInvoice()
-//            val invoice = getAllInvoices.getInvoice(InvoiceId.reconstruct("ad4a1759-5438-4c9f-8926-068bcd5add96"))
-            call.respond(invoices)
-        }
+    get("/invoices") {
+        val getAllInvoices = GetAllInvoices()
+        val invoices = getAllInvoices.getAllInvoice()
+        call.respond(invoices)
+    }
+
+    get("/invoices/{invoiceId}") {
+        //TODO 実装
+    }
+
+    post("/invoices") {
+        //TODO 実装
+    }
+
+    put("/invoices/{invoiceId") {
+        //TODO 実装
+    }
+
+    delete("/invoices/{invoiceId") {
+        //TODO 実装
     }
 }
