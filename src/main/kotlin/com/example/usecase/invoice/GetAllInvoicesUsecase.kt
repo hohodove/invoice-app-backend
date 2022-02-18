@@ -1,4 +1,4 @@
-package com.example.usecase
+package com.example.usecase.invoice
 
 import com.example.domain.invoice.Invoice
 import com.example.domain.invoice.InvoiceId
@@ -6,7 +6,7 @@ import com.example.infrastructure.repository.InvoiceRepository
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.sqlobject.kotlin.onDemand
 
-class GetAllInvoices {
+class GetAllInvoicesUsecase {
     val jdbi: Jdbi = Jdbi.create("jdbc:postgresql://localhost:5432/test", "admin", "password")
         .installPlugins()
 

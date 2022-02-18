@@ -1,30 +1,30 @@
 package com.example.controller
 
-import com.example.usecase.GetAllInvoices
+import com.example.usecase.invoice.GetAllInvoicesUsecase
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Route.invoiceController() {
     get("/invoices") {
-        val getAllInvoices = GetAllInvoices()
-        val invoices = getAllInvoices.getAllInvoice()
+        val getAllInvoicesUsecase = GetAllInvoicesUsecase()
+        val invoices = getAllInvoicesUsecase.getAllInvoice()
         call.respond(invoices)
     }
 
-    get("/invoices/{invoiceId}") {
+    get("/invoice/{invoiceId}") {
         //TODO 実装
     }
 
-    post("/invoices") {
+    post("/invoice") {
         //TODO 実装
     }
 
-    put("/invoices/{invoiceId") {
+    put("/invoice/{invoiceId") {
         //TODO 実装
     }
 
-    delete("/invoices/{invoiceId") {
+    delete("/invoice/{invoiceId") {
         //TODO 実装
     }
 }

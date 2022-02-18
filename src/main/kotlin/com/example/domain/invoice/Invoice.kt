@@ -6,27 +6,48 @@ import java.time.LocalDate
 import java.util.UUID
 
 class Invoice private constructor(
-    @Nested val invoiceId: InvoiceId = InvoiceId.create(),
+    @Nested val invoiceId: InvoiceId,
     @Nested val clientInvoiceNo: ClientInvoiceNo,
     @Nested val totalAmount: TotalAmount,
-    @Nested val paymentDueBy: PaymentDueBy
+    @Nested val paymentDueBy: PaymentDueBy,
+    @Nested val registerDay: RegisterDay
 ) {
     companion object {
-        fun create(clientInvoiceNo: ClientInvoiceNo, totalAmount: TotalAmount, paymentDueBy: PaymentDueBy): Invoice {
+        fun create(
+            invoiceId: InvoiceId = InvoiceId.create(),
+            clientInvoiceNo: ClientInvoiceNo,
+            totalAmount: TotalAmount,
+            paymentDueBy: PaymentDueBy,
+            registerDay: RegisterDay = RegisterDay(LocalDate.now())
+        ): Invoice {
+            if (paymentDueBy.value.isBefore(registerDay.value)) {
+                throw java.lang.IllegalArgumentException("支払期限($paymentDueBy)が登録日($registerDay)より過去です。")
+            }
+
             return Invoice(
+                invoiceId = invoiceId,
                 clientInvoiceNo = clientInvoiceNo,
                 totalAmount = totalAmount,
-                paymentDueBy = paymentDueBy
+                paymentDueBy = paymentDueBy,
+                registerDay = registerDay
             )
         }
 
-        fun reconstruct(invoiceId: InvoiceId, clientInvoiceNo: ClientInvoiceNo, totalAmount: TotalAmount, paymentDueBy: PaymentDueBy): Invoice {
-            return Invoice(invoiceId, clientInvoiceNo, totalAmount, paymentDueBy)
+        fun reconstruct(
+            invoiceId: InvoiceId,
+            clientInvoiceNo: ClientInvoiceNo,
+            totalAmount: TotalAmount,
+            paymentDueBy: PaymentDueBy,
+            registerDay: RegisterDay
+        ): Invoice {
+            return Invoice(invoiceId, clientInvoiceNo, totalAmount, paymentDueBy, registerDay)
         }
     }
 }
 
-class InvoiceId private constructor(@ColumnName("invoice_id") val value: String = UUID.randomUUID().toString()) {
+class InvoiceId private constructor(
+    @ColumnName("invoice_id") val value: String = UUID.randomUUID().toString()
+) {
     companion object {
         fun create(): InvoiceId {
             return InvoiceId()
@@ -42,9 +63,6 @@ data class ClientInvoiceNo(@ColumnName("client_invoice_no") val value: Int)
 
 data class TotalAmount(@ColumnName("total_amount") val value: Int)
 
-data class PaymentDueBy(@ColumnName("payment_due_by") val value: LocalDate) {
-    init {
-        val yestaday = LocalDate.now().minusDays(1)
-        if (!value.isAfter(yestaday)) throw java.lang.IllegalArgumentException("支払期限が過去日付です。")
-    }
-}
+data class PaymentDueBy(@ColumnName("payment_due_by") val value: LocalDate)
+
+data class RegisterDay(@ColumnName("register_day") val value: LocalDate)
