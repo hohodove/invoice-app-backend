@@ -21,7 +21,7 @@ class Invoice private constructor(
             registerDay: RegisterDay = RegisterDay(LocalDate.now())
         ): Invoice {
             if (paymentDueBy.value.isBefore(registerDay.value)) {
-                throw java.lang.IllegalArgumentException("支払期限($paymentDueBy)が登録日($registerDay)より過去です。")
+                throw IllegalArgumentException("支払期限(${paymentDueBy.value.toString()})が登録日(${registerDay.value.toString()})より過去です。")
             }
 
             return Invoice(
