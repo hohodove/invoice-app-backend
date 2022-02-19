@@ -2,6 +2,7 @@ package com.example.controller
 
 import com.example.domain.invoice.Invoice
 import com.example.domain.invoice.InvoiceId
+import com.example.usecase.invoice.FindInvoiceDto
 import com.example.usecase.invoice.FindInvoiceUseCase
 import com.example.usecase.invoice.GetAllInvoicesUseCasea
 import io.ktor.application.*
@@ -21,7 +22,7 @@ fun Route.invoiceController() {
 
         val invoiceId = InvoiceId.reconstruct(pathparameter)
         val findInvoiceUseCase = FindInvoiceUseCase()
-        val invoice: Invoice = findInvoiceUseCase.execute(invoiceId)
+        val invoice = findInvoiceUseCase.execute(invoiceId)
         call.respond(invoice ?: "Not Found")
     }
 
