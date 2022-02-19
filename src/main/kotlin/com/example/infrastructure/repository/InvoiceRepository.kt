@@ -2,27 +2,17 @@ package com.example.infrastructure.repository
 
 import com.example.domain.invoice.Invoice
 import com.example.domain.invoice.InvoiceId
-import org.jdbi.v3.sqlobject.SqlObject
-import org.jdbi.v3.sqlobject.statement.SqlQuery
-import org.jdbi.v3.sqlobject.statement.SqlUpdate
+import org.jdbi.v3.core.Jdbi
+import org.jdbi.v3.sqlobject.kotlin.onDemand
 
-interface InvoiceRepository : SqlObject {
+class InvoiceRepository {
+    fun findByInvoiceId(invoiceId: InvoiceId): Invoice {
+        val jdbi: Jdbi = Jdbi.create("jdbc:postgresql://localhost:5432/test", "admin", "password")
+            .installPlugins()
 
-    @SqlUpdate("""
-       insert into invoices
-       (invoiceId, clientInvoiceNo, totalAmount, paymentDueBy)
-       values (:invoice.invoiceId.value, :invoice.clientInvoiceNo, :invoice.totalAmount, :invoice.paymentDueBy) 
-    """)
-    fun insert(invoice: Invoice)
+        val dao: InvoiceRepositoryInterface = jdbi.onDemand<InvoiceRepositoryInterface>()
 
-    @SqlQuery("select * from invoices")
-    fun selectAll(): List<Invoice>
+        return dao.findByInvoiceId(invoiceId)
 
-    @SqlQuery("""
-        select
-        invoiceId, clientInvoiceNo, totalAmount, paymentDueBy
-        from invoices
-        where invoiceId = :invoiceId.value"
-    """)
-    fun selectByInvoiceId(invoiceId: InvoiceId): Invoice?
+    }
 }

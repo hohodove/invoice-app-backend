@@ -1,19 +1,28 @@
 package com.example.controller
 
-import com.example.usecase.invoice.GetAllInvoicesUsecase
+import com.example.domain.invoice.Invoice
+import com.example.domain.invoice.InvoiceId
+import com.example.usecase.invoice.FindInvoiceUseCase
+import com.example.usecase.invoice.GetAllInvoicesUseCasea
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
 fun Route.invoiceController() {
     get("/invoices") {
-        val getAllInvoicesUsecase = GetAllInvoicesUsecase()
-        val invoices = getAllInvoicesUsecase.getAllInvoice()
+        val getAllInvoicesUseCase = GetAllInvoicesUseCasea()
+        val invoices = getAllInvoicesUseCase.execute()
         call.respond(invoices)
     }
 
     get("/invoice/{invoiceId}") {
-        //TODO 実装
+        // パスパラメータを指定しない場合、以下のIllegalArgumentExceptionではなく、404 NotFoundとなる。
+        val pathparameter: String = call.parameters["invoiceId"] ?: throw IllegalArgumentException("Path parameter is null.")
+
+        val invoiceId = InvoiceId.reconstruct(pathparameter)
+        val findInvoiceUseCase = FindInvoiceUseCase()
+        val invoice: Invoice = findInvoiceUseCase.execute(invoiceId)
+        call.respond(invoice ?: "Not Found")
     }
 
     post("/invoice") {
