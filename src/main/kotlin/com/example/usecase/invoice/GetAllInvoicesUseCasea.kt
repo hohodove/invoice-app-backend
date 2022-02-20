@@ -1,22 +1,13 @@
 package com.example.usecase.invoice
 
 import com.example.domain.invoice.Invoice
-import com.example.infrastructure.repository.InvoiceRepositoryInterface
-import org.jdbi.v3.core.Jdbi
-import org.jdbi.v3.sqlobject.kotlin.onDemand
+import com.example.infrastructure.repository.InvoiceRepository
 
-class GetAllInvoicesUseCasea {
-    val jdbi: Jdbi = Jdbi.create("jdbc:postgresql://localhost:5432/test", "admin", "password")
-        .installPlugins()
+class GetAllInvoicesUseCase {
+    val invoiceRepository = InvoiceRepository()
 
-    val dao: InvoiceRepositoryInterface = jdbi.onDemand<InvoiceRepositoryInterface>()
-
-    fun execute(): List<Invoice> {
-        return emptyList()
+    fun execute(): List<InvoiceDto> {
+        val result = invoiceRepository.getAllinvoices()
+        return InvoiceDto.toList(result)
     }
-
 }
-
-//data class InvoiceDto(
-//    val invoice: List<Invoice>
-//)
