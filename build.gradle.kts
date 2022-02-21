@@ -29,6 +29,9 @@ dependencies {
     implementation("org.jdbi:jdbi3-kotlin-sqlobject:$jdbi_version")
     implementation("org.postgresql:postgresql:42.3.0")
     implementation("org.jdbi:jdbi3-postgres:3.27.0")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    implementation("com.github.kittinunf.fuel:fuel:2.3.1")
+    runtimeOnly("com.github.kittinunf.fuel:fuel-jackson:2.3.1")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }

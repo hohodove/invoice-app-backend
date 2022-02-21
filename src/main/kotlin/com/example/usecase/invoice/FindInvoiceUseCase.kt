@@ -8,13 +8,13 @@ class FindInvoiceUseCase {
 
     val invoiceRepository: InvoiceRepository = InvoiceRepository()
 
-    fun execute(invoiceId: InvoiceId): FindInvoiceDto? {
+    fun execute(invoiceId: InvoiceId): InvoiceDto? {
         val result = invoiceRepository.findByInvoiceId(invoiceId)
-        return result?.let{ FindInvoiceDto(it) }
+        return result?.let{ InvoiceDto(it) }
     }
 }
 
-data class FindInvoiceDto(
+data class InvoiceDto(
     val invoiceId: String,
     val clientInvoiceNo: Int,
     val totalAmount: Int,
@@ -28,4 +28,10 @@ data class FindInvoiceDto(
         paymentDueBy = invoice.paymentDueBy.value,
         registerDay = invoice.registerDay.value
     )
+
+    companion object {
+        fun toList(invoices: List<Invoice>): List<InvoiceDto> {
+            return invoices.map { InvoiceDto(it) }
+        }
+    }
 }
