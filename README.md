@@ -52,7 +52,7 @@ select * from invoices;
 ```
 curl -v localhost:8081/invoices
 curl -v localhost:8081/invoice/a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11
-curl -v localhost:8081/invoice/NotFount
+curl -v localhost:8081/invoice/NotFound
 ```
 
 ##### Test
