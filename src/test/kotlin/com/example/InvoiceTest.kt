@@ -10,6 +10,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.rules.ExpectedException
 import java.time.LocalDate
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 internal class InvoiceTest {
     @Test
@@ -28,7 +29,7 @@ internal class InvoiceTest {
 
         // then(期待する結果)
         val pattern = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}".toRegex()
-        kotlin.test.assertTrue(successInvoice.invoiceId.value.matches(pattern))
+        assertTrue(successInvoice.invoiceId.value.matches(pattern))
         assertEquals(LocalDate.now(), successInvoice.registerDay.value)
         assertEquals(clientInvoiceNo, successInvoice.clientInvoiceNo)
         assertEquals(totalAmount, successInvoice.totalAmount)
