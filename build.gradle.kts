@@ -31,7 +31,9 @@ dependencies {
     implementation("org.jdbi:jdbi3-postgres:3.27.0")
     implementation("org.junit.jupiter:junit-jupiter:5.8.1")
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
-    runtimeOnly("com.github.kittinunf.fuel:fuel-jackson:2.3.1")
+    runtimeOnly("com.github.kittinunf.result:result:5.2.1")
+    implementation("com.github.kittinunf.fuel:fuel-json:2.3.1")
+    implementation("org.json:json:20211205")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
